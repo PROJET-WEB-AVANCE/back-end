@@ -6,6 +6,7 @@ import { Repository } from "typeorm";
 import { UserCreateDto, UserDto, UserLoginDto } from "./dtos/user.dto";
 import { RegisterDto } from "../auth/interface/register.dto";
 import * as bcrypt from "bcrypt";
+import {plainToInstance} from "class-transformer";
 
 @Injectable()
 export class UserService {
@@ -28,37 +29,28 @@ export class UserService {
     return this.adminRepository.save(admin);
   }
 
-  async findAdminById(id: number): Promise<Admin> {
-    return this.adminRepository.findOne({
+
+  async findClientById(id: number): Promise<UserDto> {
+    const user  = await this.userRepository.findOne({
       where: { id },
     });
+    return plainToInstance(UserDto, user, { excludeExtraneousValues: true });
   }
 
-  async findClientById(id: number): Promise<Client> {
-    return this.clientRepository.findOne({
-      where: { id },
-      relations: [],
-    });
+  async findAllAdmins(): Promise<UserDto[]> {
+    const admins = await this.adminRepository.find();
+    return plainToInstance(UserDto, admins, { excludeExtraneousValues: true });
   }
 
-  async findAllAdmins(): Promise<Admin[]> {
-    return this.adminRepository.find();
+  async findAllClients(): Promise<UserDto[]> {
+    const clients = await this.clientRepository.find();
+    return plainToInstance(UserDto, clients, { excludeExtraneousValues: true });
   }
 
-  async findAllClients(): Promise<Client[]> {
-    return this.clientRepository.find();
-  }
 
-  async checkIfUsersAdmin(id: number): Promise<boolean> {
-    const user = await this.userRepository.findOne({
-      where: { id },
-    });
-    return user instanceof Admin;
-  }
 
   async createClient(userCreateDto: UserCreateDto): Promise<RegisterDto> {
 
-    console.log(userCreateDto);
     if (
       !userCreateDto.firstName ||
       !userCreateDto.lastName ||
