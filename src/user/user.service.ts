@@ -37,7 +37,7 @@ export class UserService {
   async findClientById(id: number): Promise<Client> {
     return this.clientRepository.findOne({
       where: { id },
-      relations: ["carts"],
+      relations: [],
     });
   }
 
@@ -57,6 +57,8 @@ export class UserService {
   }
 
   async createClient(userCreateDto: UserCreateDto): Promise<RegisterDto> {
+
+    console.log(userCreateDto);
     if (
       !userCreateDto.firstName ||
       !userCreateDto.lastName ||

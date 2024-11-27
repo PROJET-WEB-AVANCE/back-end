@@ -44,7 +44,7 @@ export class AuthService {
   }
 
   private _createToken(user: User): JwtTokenDto {
-    const payload = { id: user.id, role: user.type };
+    const payload = { id: user.id,firstName: user.firstName, role: user.type };
 
     const token = this.jwtService.sign(payload);
     return {

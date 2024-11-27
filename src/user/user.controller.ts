@@ -48,7 +48,7 @@ export class UserController {
   }
 
   @UseGuards(AuthGuard("jwt"))
-  @Get("my-info")
+  @Get("my-infos")
   async getMyInfo(@Request() req: any) {
     return this.userService.findClientById(req.user.id);
   }
