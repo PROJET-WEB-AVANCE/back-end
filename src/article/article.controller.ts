@@ -22,9 +22,18 @@ export class ArticleController {
     })
     @ApiResponse({ status: 200, description: 'List of articles', type: [GetArticleDto] })
     @HttpCode(HttpStatus.OK)
-    findAll(@Query() filter: FilterArticleDto): Promise<GetArticleDto[]> {
+    findAll(@Query() filter: FilterArticleDto): Promise<{ data: GetArticleDto[]; total: number }> {
         return this.articleService.findAll(filter);
     }
+
+    @Get('name/:name')
+    @ApiOperation({ summary: "Get an article by name (Public)" })
+    @ApiResponse({ status: 200, description: "Article details", type: GetArticleDto })
+    @HttpCode(HttpStatus.OK)
+    findByName(@Param('name') name: string): Promise<GetArticleDto> {
+        return this.articleService.findByName(name);
+    }
+
 
     @Get(':id')
     @ApiOperation({

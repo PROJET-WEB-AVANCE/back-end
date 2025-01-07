@@ -1,7 +1,7 @@
 import {HttpException, Injectable} from "@nestjs/common";
 import {InjectRepository} from "@nestjs/typeorm";
 import {Article} from "./article.entity";
-import {FindOptionsWhere, Repository} from "typeorm";
+import {FindOptionsWhere, Repository,Like} from "typeorm";
 import {Category} from "../category/category.entity";
 import {FilterArticleDto} from "./interface/filter-article.dto";
 import {plainToInstance} from "class-transformer";
@@ -18,20 +18,39 @@ export class ArticleService {
     ) {
     }
 
-    async findAll(filter: FilterArticleDto): Promise<GetArticleDto[]> {
+    async findAll(filter: FilterArticleDto): Promise<{ data: GetArticleDto[]; total: number }> {
         const where: FindOptionsWhere<Article> = {};
 
-        if (filter.name) where.name = filter.name;
-        if (filter.categoryId) where.category = {id: filter.categoryId};
+        if (filter.name) {
+            where.name = Like(`%${filter.name}%`);
+        }
 
-        const articles = await this.articleRepository.find({
+        if (filter.categoryName) {
+            const category = await this.categoryRepository.findOne({ where: { name: filter.categoryName } });
+            if (!category) throw new HttpException('Category not found', 404);
+            where.category = { id: category.id };
+        }
+
+        const [articles, total] = await this.articleRepository.findAndCount({
             where,
-            relations: ['category'],
-            order: filter.sortPrice ? {price: filter.sortPrice.toLowerCase() === 'asc' ? 'ASC' : 'DESC'} : undefined,
+            relations: ["category"],
+            order: filter.sortPrice ? { price: filter.sortPrice.toLowerCase() === "asc" ? "ASC" : "DESC" } : undefined,
+            take: filter.limit,
+            skip: filter.offset,
         });
 
-        return plainToInstance(GetArticleDto, articles, {excludeExtraneousValues: true});
+        return {
+            data: plainToInstance(GetArticleDto, articles, { excludeExtraneousValues: true }),
+            total,
+        };
+    }
 
+    async findByName(name: string): Promise<GetArticleDto> {
+        const article = await this.articleRepository.findOne({ where: { name }, relations: ["category"] });
+        if (!article) {
+            throw new HttpException("Article not found", 404);
+        }
+        return plainToInstance(GetArticleDto, article, { excludeExtraneousValues: true });
     }
 
     async findOne(id: number): Promise<GetArticleDto> {
