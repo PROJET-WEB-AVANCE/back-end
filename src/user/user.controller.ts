@@ -3,7 +3,7 @@ import {
   Controller,
   Get, HttpCode, HttpStatus,
   Param,
-  Post,
+  Post, Put,
   Request,
   UseGuards,
 } from "@nestjs/common";
@@ -13,7 +13,7 @@ import { AuthGuard } from "@nestjs/passport";
 import { RolesGuard } from "../auth/role.guard";
 import { HasRoles } from "../auth/has-role.decorator";
 import { ERole } from "../auth/interface/role.enum";
-import {UserDto} from "./dtos/user.dto";
+import {UpdateUserDto, UserDto} from "./dtos/user.dto";
 import {ApiBearerAuth, ApiOperation, ApiResponse, ApiTags} from "@nestjs/swagger";
 
 @ApiTags('Users')
@@ -74,6 +74,15 @@ export class UserController {
     return this.userService.findClientById(req.user.id);
   }
 
-
-
+  @UseGuards(AuthGuard("jwt"))
+  @Put("update-profile")
+  @ApiOperation({
+    summary: 'Get current user info (Authenticated)',
+    description: 'This endpoint retrieves the current user\'s information. Requires authentication.'
+  })
+  @ApiResponse({ status: 200, description: 'User details', type: UserDto })
+  @HttpCode(HttpStatus.OK)
+  async updateProfile(@Request() req: any, @Body() data : UpdateUserDto) : Promise<UserDto> {
+    return this.userService.updateProfile(req.user.id, data);
+  }
 }

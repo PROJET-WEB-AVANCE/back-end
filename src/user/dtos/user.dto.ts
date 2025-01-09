@@ -45,3 +45,18 @@ export class UserDto {
   type: ERole;
 }
 
+@Exclude()
+export class UpdateUserDto {
+  @Expose()
+  @ApiProperty({ description : "Last name of the user"})
+  lastName: string;
+
+  @Expose()
+  @ApiProperty({ description: 'First name of the user' })
+  firstName: string;
+
+  @Expose()
+  @ApiProperty({description: "New password of the user"})
+  password: string;
+
+}

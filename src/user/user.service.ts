@@ -3,7 +3,7 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Admin, Client, User } from "./user.entity";
 import { CreateAdminDto } from "./dtos/create-admin.dto";
 import { Repository } from "typeorm";
-import { UserCreateDto, UserDto, UserLoginDto } from "./dtos/user.dto";
+import {UpdateUserDto, UserCreateDto, UserDto, UserLoginDto} from "./dtos/user.dto";
 import { RegisterDto } from "../auth/interface/register.dto";
 import * as bcrypt from "bcrypt";
 import {plainToInstance} from "class-transformer";
@@ -114,5 +114,15 @@ export class UserService {
     return user;
   }
 
+  async updateProfile(id: number, data: UpdateUserDto): Promise<UserDto> {
 
+    const user = await this.findOneById(id);
+
+    user.lastName = data.lastName;
+    user.firstName = data.firstName;
+    if(data.password && data.password.trim() !== "")
+      user.password = data.password;
+    
+    return plainToInstance(UserDto, this.userRepository.save(user));
+  }
 }
