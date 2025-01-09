@@ -106,6 +106,22 @@ export class ArticleService {
         return plainToInstance(GetArticleDto, updatedArticle, {excludeExtraneousValues: true});
     }
 
+    async updateQuantity(id: number, quantity: number){
+        const article = await this.articleRepository.findOne({
+            where: {id},
+        });
+        if (!article) {
+            throw new HttpException('Article not found', 404);
+        }
+
+        article.quantity = quantity;
+        const updatedArticle = await this.articleRepository.save(article);
+
+        return plainToInstance(GetArticleDto, updatedArticle, {excludeExtraneousValues: true});
+
+
+    }
+
     async delete(id: number): Promise<{ message: string }> {
         const article = await this.articleRepository.findOne({
             where: {id},

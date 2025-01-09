@@ -8,6 +8,7 @@ import { ArticleModule } from './article/article.module';
 import { CategoryModule } from './category/category.module';
 import { UserModule } from "./user/user.module";
 import { AuthModule } from './auth/auth.module';
+import {CartModule} from "./cart/cart.module";
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AuthModule } from './auth/auth.module';
     ArticleModule,
     CategoryModule,
     AuthModule,
+    CartModule,
   ],
   controllers: [AppController],
   providers: [AppService],

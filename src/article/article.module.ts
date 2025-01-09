@@ -9,5 +9,7 @@ import {ArticleController} from "./article.controller";
     imports: [TypeOrmModule.forFeature([Article, Category])],
     controllers: [ArticleController],
     providers: [ArticleService],
+    exports : [ArticleService],
+
 })
 export class ArticleModule {}
