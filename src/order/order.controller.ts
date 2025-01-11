@@ -18,6 +18,7 @@ import {HasRoles} from "../auth/has-role.decorator";
 import {ApiOperation, ApiResponse} from "@nestjs/swagger";
 import {GetArticleDto} from "../article/interface/get-article.dto";
 import {OrderDto} from "./interface/order.dto";
+import {RolesGuard} from "../auth/role.guard";
 
 @Controller('order')
 export class OrderController {
@@ -28,19 +29,19 @@ export class OrderController {
     @ApiOperation({
         summary: 'Place a order order in pending waiting for a validation'
     })
-    @ApiResponse({ status: 201, description: 'Order created successfully' })
+    @ApiResponse({ status: 201, description: 'Order created successfully', type: OrderDto })
     @HttpCode(HttpStatus.CREATED)
     async checkout(@Request() req: any, @Body()  items: { id: number; name: string;  quantity: number }[]) {
         return await this.orderService.checkout(req.user.id, items);
     }
 
-    @UseGuards(AuthGuard("jwt"))
+    @UseGuards(AuthGuard("jwt"), RolesGuard)
     @Post('accept/:id')
-    @HasRoles(ERole.ROLE_ADMIN)
+    @HasRoles(ERole.ROLE_ADMIN, ERole.ROLE_SALES)
     @ApiOperation({
         summary: 'Accept a order'
     })
-    @ApiResponse({ status: 201, description: 'Order accepted successfully' })
+    @ApiResponse({ status: 201, description: 'Order accepted successfully' , type: OrderDto})
     @HttpCode(HttpStatus.CREATED)
     async accept(@Param("id") orderId: number) {
         return await this.orderService.accept(orderId);
@@ -57,7 +58,7 @@ export class OrderController {
         return await this.orderService.getMyOrder(req.user.id);
     }
 
-    @UseGuards(AuthGuard("jwt"))
+    @UseGuards(AuthGuard("jwt"), RolesGuard)
     @HasRoles(ERole.ROLE_ADMIN)
     @Put()
     @ApiOperation({
@@ -78,15 +79,15 @@ export class OrderController {
         summary: 'Delete the order of a user',
         description: 'This endpoint is accessible without authentication.'
     })
-    @ApiResponse({ status: 204, description: 'Order deleted'})
+    @ApiResponse({ status: 204, description: 'Order deleted', type: OrderDto})
     @HttpCode(HttpStatus.NO_CONTENT)
     async clearOrder(@Param('id') orderId: number, @Request() req: any) {
         return await this.orderService.deleteOrder(req.user.id ,  orderId, req.user.type);
     }
 
-    @UseGuards(AuthGuard("jwt"))
+    @UseGuards(AuthGuard("jwt"), RolesGuard)
     @Get("all")
-    @HasRoles(ERole.ROLE_ADMIN)
+    @HasRoles(ERole.ROLE_ADMIN, ERole.ROLE_SALES)
     @ApiOperation({
         summary: 'Get all the orders',
         description: 'This endpoint is accessible only for admins.'

@@ -56,10 +56,12 @@ export class OrderService {
     }
 
     async getMyOrder(userId: number): Promise<OrderDto[]> {
-        const order = await this.orderRepository.find({where:
-                { userId: userId  },
-                relations: ['userId'],
-            });
+        const order = await this.orderRepository.find({
+            relations: ['userId'],
+            order: {
+                date: 'DESC',
+            },
+        });
 
         if (!order) {
             throw new HttpException('Panier non trouvé', 404);
@@ -146,7 +148,12 @@ export class OrderService {
     }
 
     async getAllOrders() : Promise<OrderDto[]> {
-        const orders = await this.orderRepository.find({ relations: ['userId'] });
+        const orders = await this.orderRepository.find({
+            relations: ['userId'],
+            order: {
+                date: 'DESC',
+            },
+        });
         return plainToInstance(OrderDto, orders);
     }
 

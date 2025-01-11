@@ -8,16 +8,16 @@ export class RolesGuard implements CanActivate {
   }
 
   canActivate(context: ExecutionContext): boolean {
-    const requiredRole = this.reflector.get<ERole>("role", context.getHandler());
+    const requiredRoles = this.reflector.get<ERole>("roles", context.getHandler());
 
-    if (!requiredRole) return true;
+    if (!requiredRoles) return true;
 
     const { user } = context.switchToHttp().getRequest();
 
 
     if (!user) throw new HttpException("You are not authenticated", 401);
 
-    return user.type === requiredRole;
+    return requiredRoles.includes(<ERole>user.type);
   }
 
 }
