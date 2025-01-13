@@ -1,85 +1,113 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Projet Web Avancé - React & Backend
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Ce projet utilise React pour le front-end et un backend avec NestJS. Vous pouvez également utiliser Docker pour faire fonctionner les deux parties.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+Les répos git sont trouvables ici : https://github.com/PROJET-WEB-AVANCE
 
-## Description
+## Installation du Frontend
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+1. Clonez ce repository.
 
-## Project setup
+2. Allez dans le répertoire du frontend et installez les dépendances :
 
-```bash
-$ npm install
-```
+   ```bash
+   npm install
+   ```
 
-## Compile and run the project
+3. Démarrez le serveur de développement :
 
-```bash
-# development
-$ npm run start
+   ```bash
+   npm run start
+   ```
 
-# watch mode
-$ npm run start:dev
+Le front sera disponible sur le port `3000`.
 
-# production mode
-$ npm run start:prod
-```
+Ou bien, vous pouvez démarrer avec Docker en utilisant `docker-compose` :
 
-## Run tests
+   ```bash
+   docker-compose up
+   ```
 
-```bash
-# unit tests
-$ npm run test
+Cela démarrera le frontend dans un container Docker.
 
-# e2e tests
-$ npm run test:e2e
+## Installation du Backend
 
-# test coverage
-$ npm run test:cov
-```
+1. Allez dans le répertoire du backend et installez les dépendances :
 
-## Resources
+   ```bash
+   npm install
+   ```
 
-Check out a few resources that may come in handy when working with NestJS:
+2. Démarrez le serveur backend :
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+   ```bash
+   npm run start
+   ```
 
-## Support
+Ou bien, utilisez `nest start` si vous utilisez NestJS :
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+   ```bash
+   nest start
+   ```
 
-## Stay in touch
+Le backend sera disponible sur le port `8080`.
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Vous pouvez également démarrer le backend avec Docker :
 
-## License
+   ```bash
+   docker-compose up
+   ```
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+Cela démarrera le backend dans un container Docker.
+
+## Comptes de test disponibles
+
+Pour tester l'application, vous pouvez utiliser les comptes suivants :
+
+Client
+
+Email : client@insa-cvl.fr
+
+Mot de passe : client123
+
+Vendeur
+
+Email : julien.sanchez@insa-cvl.fr
+
+Mot de passe : sales123
+
+Admin
+
+Email : quentin.dollen@insa-cvl.fr
+
+Mot de passe : admin123
+
+## Swagger API Documentation
+
+Une documentation Swagger de l'API est disponible à l'adresse suivante :
+
+[http:localhost:8080/api-docs](http:localhost:8080/api-docs)
+
+## Routes Frontend
+
+Le front-end contient les routes suivantes :
+
+- `/home` : Page d'accueil
+- `/login` : Page de connexion
+- `/register` : Page d'inscription
+- `/profile` : Page de profil utilisateur
+- `/search` : Page de recherche
+- `/cart` : Page de panier
+- `/admin` : Page d'administration des produits
+- `/admin/order` : Page de gestion des commandes 
+- `/admin/edit/:id` : Page de modification d'une commande
+- `/category/:categoryName` : Page d'une catégorie spécifique
+- `/article/:articleName` : Page de détails d'un article
+- `/profile/edit` : Page de modification du profil utilisateur
+- `/profile/order` : Page des commandes utilisateur
+- `/admin/order/:id` : Page de modification d'une commande admin
+
+## Configuration Docker
+
+Si vous préférez utiliser Docker, vous pouvez démarrer les deux parties (frontend et backend) avec les commandes `docker-compose up` respectivement dans les dossiers `frontend` et `backend`.
+
