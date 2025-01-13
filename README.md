@@ -32,6 +32,26 @@ Cela démarrera le frontend dans un container Docker.
 
 ## Installation du Backend
 
+Le backend nécessite un fichier .env pour fonctionner correctement. Un exemple de fichier de configuration (.env.example) est fourni dans le répertoire du backend.
+
+```
+cp .env.example .env
+```
+
+Ouvrez le fichier .env et complétez les valeurs des variables en fonction de votre environnement. Par exemple :
+
+```
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USER=your_username
+DATABASE_PASSWORD=your_password
+DATABASE_NAME=your_database
+JWT_SECRET=your_jwt_secret
+```
+
+
+Assurez-vous que toutes les valeurs nécessaires sont correctement renseignées avant de lancer le backend.
+
 1. Allez dans le répertoire du backend et installez les dépendances :
 
    ```bash
@@ -44,7 +64,7 @@ Cela démarrera le frontend dans un container Docker.
    npm run start
    ```
 
-Ou bien, utilisez `nest start` si vous utilisez NestJS :
+   Ou bien, utilisez `nest start` si vous utilisez NestJS :
 
    ```bash
    nest start
